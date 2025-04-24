@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Abdulbasit Abdulalim | Web Developer</title>
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;900&family=Playfair+Display:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="icon" href="images/about.ico">
+    <style>
+        :root {
+            --primary: #840808;
+            --secondary: #55A37C;
+            --accent1: #506858;
+            --accent2: #CDCDBF;
+            --accent3: #68A04D;
+            --dark: #1a1a1a;
+            --light: #f8f9fa;
+        }
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--light);
+            color: var(--dark);
+            overflow-x: hidden;
+            position: relative;
+        }
+        
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 20% 30%, rgba(104, 160, 77, 0.1) 0%, transparent 30%), 
+                        radial-gradient(circle at 80% 70%, rgba(132, 8, 8, 0.1) 0%, transparent 30%);
+            z-index: -1;
+            pointer-events: none;
+        }
+        
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+        }
+        
+        .navbar {
+            background: rgba(248, 249, 250, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 30px rgba(0, 0, 0, 0.1);
+            padding: 1rem 2rem;
+            transition: all 0.3s ease;
+        }
+        
+        .navbar-brand {
+            font-family: 'Playfair Display', serif;
+            font-weight: 900;
+            font-size: 1.8rem;
+            color: var(--primary) !important;
+            position: relative;
+        }
+        
+        .navbar-brand::after {
+            content: "";
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 50%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            border-radius: 3px;
+            transition: all 0.3s ease;
+        }
+        
+        .navbar-brand:hover::after {
+            width: 100%;
+        }
+        
+        .nav-link {
+            font-weight: 600;
+            margin: 0 0.5rem;
+            position: relative;
+            color: var(--dark) !important;
+        }
+        
+        .nav-link::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: all 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .hero-section {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg, rgba(248, 249, 250, 0.9) 0%, rgba(205, 205, 191, 0.7) 100%);
+        }
+        
+        .hero-section::before {
+            content: "";
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(85, 163, 124, 0.1) 0%, transparent 70%);
+            animation: rotate 30s linear infinite;
+            z-index: -1;
+        }
+        
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+        
+        .hero-title {
+            font-size: 4.5rem;
+            font-weight: 900;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(45deg, var(--primary), var(--accent1));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            line-height: 1.2;
+        }
+        
+        .hero-subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            color: var(--accent1);
+            font-weight: 300;
+        }
+        
+        .hero-cta .btn {
+            padding: 0.8rem 2rem;
+            font-weight: 600;
+            border-radius: 50px;
+            margin-right: 1rem;
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary);
+            border-color: var(--primary);
+        }
+        
+        .btn-outline-primary {
+            color: var(--primary);
+            border-color: var(--primary);
+        }
+        
+        .btn-outline-primary:hover {
+            color: white;
+            background-color: var(--primary);
+        }
+        
+        .btn-primary::before, .btn-outline-primary::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            z-index: -1;
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary::before {
+            opacity: 1;
+        }
+        
+        .btn-outline-primary:hover::before {
+            opacity: 1;
+        }
+        
+        .hero-image {
+            position: relative;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .profile-image-container {
+    width: 300px;
+    height: 300px;
+    perspective: 1000px;
+    position: relative;
+    margin: 0 auto;
+}
+
+.cube {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transform-style: preserve-3d;
+    animation: rotate 15s infinite linear;
+    
+}
+.cube:hover {
+    animation-play-state: paused;
+}
+
+.cube-face {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    backface-visibility: hidden;
+    box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.3);
+}
+
+/* Positioning each face */
+.cube-face.front { transform: translateZ(200px); }
+.cube-face.back { transform: rotateY(180deg) translateZ(200px); }
+.cube-face.right { transform: rotateY(90deg) translateZ(200px); }
+.cube-face.left { transform: rotateY(-90deg) translateZ(200px); }
+.cube-face.top { transform: rotateX(90deg) translateZ(200px); }
+.cube-face.bottom { transform: rotateX(-90deg) translateZ(200px); }
+
+.profile-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+@keyframes rotate {
+    from { transform: rotateY(0); }
+    to { transform: rotateY(360deg); }
+}
+        
+        /* Dynamic Greeting Styles */
+        .dynamic-greeting {
+            font-size: 1.2rem;
+            color: var(--accent1);
+            margin-bottom: 1rem;
+            display: block;
+            font-weight: 600;
+        }
+        
+        /* Skills Grid */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1.5rem;
+            padding: 2rem 0;
+        }
+        
+        .skill-item {
+            text-align: center;
+            padding: 1rem;
+            background-color: var(--accent2);
+            border-radius: 15px;
+            transition: all 0.3s ease;
+        }
+        
+        .skill-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            color: white;
+        }
+        
+        .skill-item i {
+            margin-bottom: 1rem;
+            font-size: 2.5rem;
+        }
+        
+        /* About Snippet */
+        .about-snippet {
+            padding: 5rem 0;
+            position: relative;
+            background-color: rgba(255,255,255,0.8);
+        }
+        
+        .about-snippet::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%2355A37C' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            z-index: -1;
+            opacity: 0.3;
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 992px) {
+            .hero-title {
+                font-size: 3.5rem;
+            }
+            
+            .profile-image-container {
+                width: 350px;
+                height: 350px;
+            }
+            
+            .profile-image {
+                width: 330px;
+                height: 330px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.8rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1.2rem;
+            }
+            
+            .profile-image-container {
+                width: 300px;
+                height: 300px;
+                margin: 2rem auto;
+            }
+            
+            .profile-image {
+                width: 280px;
+                height: 280px;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .hero-title {
+                font-size: 2.2rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">Abdulbasit</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="about.html">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="projects.html">Projects</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="contact.html">Contact</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="survey.html">Survey</a>
+                    </li>
+                    <li class="nav-item">
+                        <button id="theme-toggle" class="btn btn-sm btn-outline-secondary ms-2">
+                            <i class="fas fa-moon"></i>
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6 hero-content">
+                    <span class="dynamic-greeting" id="greeting"></span>
+                    <h1 class="hero-title">Abdulbasit Abdulalim</h1>
+                    <p class="hero-subtitle">Web Developer</p>
+                    <p class="lead">I design and build modern, responsive websites using clean code and creative ideas.</p>
+                    <div class="hero-cta">
+                        <a href="projects.html" class="btn btn-primary">View My Work</a>
+                        <a href="contact.html" class="btn btn-outline-primary">Contact Me</a>
+                    </div>
+                </div>
+                <div class="col-lg-6 hero-image">
+                    <div class="profile-image-container">
+                        <div class="cube">
+                            <!-- Front face with main profile image -->
+                            <div class="cube-face front">
+                                <img src="images/about.png" class="profile-image" alt="Profile Front">
+                            </div>
+                            
+                            <!-- Back face with second photo -->
+                            <div class="cube-face back">
+                                <img src="images/about3.jpg" class="profile-image" alt="Profile Back">
+                            </div>
+                            
+                            <!-- Right face with third photo -->
+                            <div class="cube-face right">
+                                <img src="images/about1.jpg" class="profile-image" alt="Profile Right">
+                            </div>
+                            
+                            <!-- Left face with fourth photo -->
+                            <div class="cube-face left">
+                                <img src="images/about2.jpg" class="profile-image" alt="Profile Left">
+                            </div>
+                            
+                            <!-- Top face with fifth photo -->
+                            <div class="cube-face top">
+                                <img src="images/about.png" class="profile-image" alt="Profile Top">
+                            </div>
+                            
+                            <!-- Bottom face with sixth photo -->
+                            <div class="cube-face bottom">
+                                <img src="images/about.png" class="profile-image" alt="Profile Bottom">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section class="py-5">
+        <div class="container">
+            <h2 class="text-center mb-5">Core Technologies</h2>
+            <div class="skills-grid">
+                <div class="skill-item">
+                    <i class="fab fa-html5"></i>
+                    <h4>HTML5</h4>
+                </div>
+                <div class="skill-item">
+                    <i class="fab fa-css3-alt"></i>
+                    <h4>CSS3</h4>
+                </div>
+                <div class="skill-item">
+                    <i class="fab fa-js"></i>
+                    <h4>JavaScript</h4>
+                </div>
+                <div class="skill-item">
+                    <i class="fas fa-mobile-alt"></i>
+                    <h4>Responsive Design</h4>
+                </div>
+                <div class="skill-item">
+                    <i class="fab fa-git-alt"></i>
+                    <h4>Git & GitHub</h4>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Snippet -->
+    <section class="about-snippet">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-8 text-center">
+                    <h2 class="mb-4">About Me</h2>
+                    <p class="lead">I'm Abdulbasit, a passionate web developer based in Lagos, Nigeria. I specialize in building fast, accessible, and user-friendly websites. I love turning ideas into interactive digital experiences.</p>
+                    <a href="about.html" class="btn btn-outline-primary mt-3">Read More</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-light py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h3 class="mb-3">Abdulbasit Abdulalim</h3>
+                    <p>Creating digital experiences that matter.</p>
+                    <div class="social-links mt-3">
+                        <a href="#" class="text-light me-3"><i class="fab fa-github"></i></a>
+                        <a href="#" class="text-light me-3"><i class="fab fa-linkedin"></i></a>
+                        <a href="#" class="text-light me-3"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <h5 class="mb-3">Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="index.html" class="text-light">Home</a></li>
+                        <li class="mb-2"><a href="about.html" class="text-light">About</a></li>
+                        <li class="mb-2"><a href="projects.html" class="text-light">Projects</a></li>
+                        <li class="mb-2"><a href="contact.html" class="text-light">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3">
+                    <h5 class="mb-3">Contact</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="mailto:hello@example.com" class="text-light">hello@example.com</a></li>
+                        <li class="mb-2"><a href="tel:+1234567890" class="text-light">+123 456 7890</a></li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="my-4">
+            <div class="text-center">
+                <p>&copy; 2025 Abdulbasit Abdulalim. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JS -->
+    <script>
+        // Dynamic Greeting
+        function setGreeting() {
+            const hour = new Date().getHours();
+            const greeting = document.getElementById('greeting');
+            let message;
+            
+            if (hour < 12) message = "Good Morning! ☀️";
+            else if (hour < 18) message = "Good Afternoon! 🌤️";
+            else message = "Good Evening! 🌙";
+            
+            greeting.textContent = message;
+        }
+
+        // Dark Mode Toggle
+        document.getElementById('theme-toggle').addEventListener('click', function() {
+            document.body.classList.toggle('dark-mode');
+            
+            // Change icon
+            const icon = this.querySelector('i');
+            if (document.body.classList.contains('dark-mode')) {
+                icon.classList.remove('fa-moon');
+                icon.classList.add('fa-sun');
+                localStorage.setItem('theme', 'dark');
+            } else {
+                icon.classList.remove('fa-sun');
+                icon.classList.add('fa-moon');
+                localStorage.setItem('theme', 'light');
+            }
+        });
+
+        // Check for saved theme preference
+        if (localStorage.getItem('theme') === 'dark') {
+            document.body.classList.add('dark-mode');
+            const icon = document.querySelector('#theme-toggle i');
+            icon.classList.remove('fa-moon');
+            icon.classList.add('fa-sun');
+        }
+
+        // Initialize on load
+        window.addEventListener('DOMContentLoaded', (event) => {
+            setGreeting();
+            
+            // Navbar scroll effect
+            window.addEventListener('scroll', function() {
+                const navbar = document.querySelector('.navbar');
+                if (window.scrollY > 50) {
+                    navbar.style.padding = '0.5rem 2rem';
+                    navbar.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.1)';
+                } else {
+                    navbar.style.padding = '1rem 2rem';
+                    navbar.style.boxShadow = '0 2px 30px rgba(0, 0, 0, 0.1)';
+                }
+            });
+        });
+    </script>
+</body>
+</html>

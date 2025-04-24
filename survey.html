@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Survey | Abdulbasit Abdulalim</title>
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;900&family=Playfair+Display:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="icon" href="images/about.ico">
+    <style>
+        :root {
+            --primary: #840808;
+            --secondary: #55A37C;
+            --accent1: #506858;
+            --accent2: #CDCDBF;
+            --accent3: #68A04D;
+            --dark: #1a1a1a;
+            --light: #f8f9fa;
+        }
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--light);
+            color: var(--dark);
+            overflow-x: hidden;
+            position: relative;
+        }
+        
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 20% 30%, rgba(104, 160, 77, 0.1) 0%, transparent 30%), 
+                        radial-gradient(circle at 80% 70%, rgba(132, 8, 8, 0.1) 0%, transparent 30%);
+            z-index: -1;
+            pointer-events: none;
+        }
+        
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+        }
+        
+        /* Survey Page Specific Styles */
+        .survey-hero {
+            min-height: 40vh;
+            display: flex;
+            align-items: center;
+            background: linear-gradient(135deg, rgba(248, 249, 250, 0.9) 0%, rgba(205, 205, 191, 0.7) 100%);
+        }
+        
+        .survey-section {
+            padding: 5rem 0;
+            position: relative;
+        }
+        
+        .survey-section::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%2355A37C' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            z-index: -1;
+            opacity: 0.3;
+        }
+        
+        .survey-form {
+            background-color: white;
+            padding: 3rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .form-group {
+            margin-bottom: 2rem;
+        }
+        
+        .form-label {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+        
+        .required-field::after {
+            content: " *";
+            color: #dc3545;
+        }
+        
+        .form-control {
+            border: 1px solid var(--accent2);
+            padding: 1rem;
+            border-radius: 8px;
+            width: 100%;
+        }
+        
+        textarea.form-control {
+            min-height: 150px;
+        }
+        
+        .form-control:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 0.25rem rgba(132, 8, 8, 0.25);
+        }
+        
+        .radio-group, .checkbox-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+        
+        .radio-option, .checkbox-option {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+        
+        .radio-option input, .checkbox-option input {
+            width: 1.2rem;
+            height: 1.2rem;
+        }
+        
+        .submit-btn {
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            font-weight: 600;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            width: 100%;
+            cursor: pointer;
+        }
+        
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(132, 8, 8, 0.2);
+        }
+        
+        .error-message {
+            color: #dc3545;
+            font-size: 0.875rem;
+            margin-top: 0.5rem;
+            display: none;
+        }
+        
+        .form-group.invalid .error-message {
+            display: block;
+        }
+        
+        .form-group.invalid .form-control,
+        .form-group.invalid .radio-group,
+        .form-group.invalid .checkbox-group {
+            border-color: #dc3545;
+        }
+        
+        /* Dark Mode Styles */
+        .dark-mode {
+            background-color: var(--dark);
+            color: var(--light);
+        }
+        
+        .dark-mode .survey-form {
+            background-color: rgba(26, 26, 26, 0.9);
+        }
+        
+        .dark-mode .form-control {
+            background-color: #333;
+            border-color: #444;
+            color: white;
+        }
+        
+        .dark-mode .form-control:focus {
+            background-color: #333;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">Abdulbasit</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="about.html">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="projects.html">Projects</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="contact.html">Contact</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="survey.html">Survey</a>
+                    </li>
+                    <li class="nav-item">
+                        <button id="theme-toggle" class="btn btn-sm btn-outline-secondary ms-2">
+                            <i class="fas fa-moon"></i>
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="survey-hero">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-8 mx-auto text-center">
+                    <h1 class="display-3 fw-bold mb-4">Client Survey</h1>
+                    <p class="lead">Help me improve my services by sharing your feedback. It should take less than 2 minutes.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Survey Section -->
+    <section class="survey-section">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="survey-form">
+                        <form id="surveyForm" novalidate>
+                            <!-- Personal Information -->
+                            <fieldset class="mb-5">
+                                <legend class="h4 mb-4">Personal Information</legend>
+                                
+                                <div class="form-group">
+                                    <label for="fullName" class="form-label required-field">Full Name</label>
+                                    <input type="text" class="form-control" id="fullName" name="fullName" required>
+                                    <div class="error-message" id="nameError">Please enter your full name</div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="email" class="form-label required-field">Email Address</label>
+                                    <input type="email" class="form-control" id="email" name="email" required>
+                                    <div class="error-message" id="emailError">Please enter a valid email address</div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="age" class="form-label">Age Group</label>
+                                    <select class="form-control" id="age" name="age">
+                                        <option value="">Select your age group</option>
+                                        <option value="18-24">18-24 years</option>
+                                        <option value="25-34">25-34 years</option>
+                                        <option value="35-44">35-44 years</option>
+                                        <option value="45-54">45-54 years</option>
+                                        <option value="55+">55+ years</option>
+                                    </select>
+                                </div>
+                            </fieldset>
+                            
+                            <!-- Survey Questions -->
+                            <fieldset class="mb-5">
+                                <legend class="h4 mb-4">Survey Questions</legend>
+                                
+                                <div class="form-group">
+                                    <p class="form-label required-field">How did you hear about my services?</p>
+                                    <div class="radio-group" id="hearAboutGroup">
+                                        <div class="radio-option">
+                                            <input type="radio" id="hearAbout1" name="hearAbout" value="Social Media" required>
+                                            <label for="hearAbout1">Social Media</label>
+                                        </div>
+                                        <div class="radio-option">
+                                            <input type="radio" id="hearAbout2" name="hearAbout" value="Search Engine">
+                                            <label for="hearAbout2">Search Engine</label>
+                                        </div>
+                                        <div class="radio-option">
+                                            <input type="radio" id="hearAbout3" name="hearAbout" value="Friend/Colleague">
+                                            <label for="hearAbout3">Friend/Colleague</label>
+                                        </div>
+                                        <div class="radio-option">
+                                            <input type="radio" id="hearAbout4" name="hearAbout" value="Other">
+                                            <label for="hearAbout4">Other</label>
+                                        </div>
+                                    </div>
+                                    <div class="error-message" id="hearAboutError">Please select an option</div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <p class="form-label required-field">What types of services are you interested in? (Select all that apply)</p>
+                                    <div class="checkbox-group" id="servicesGroup">
+                                        <div class="checkbox-option">
+                                            <input type="checkbox" id="service1" name="services" value="Web Design">
+                                            <label for="service1">Web Design</label>
+                                        </div>
+                                        <div class="checkbox-option">
+                                            <input type="checkbox" id="service2" name="services" value="Frontend Development">
+                                            <label for="service2">Frontend Development</label>
+                                        </div>
+                                        <div class="checkbox-option">
+                                            <input type="checkbox" id="service3" name="services" value="UI/UX Design">
+                                            <label for="service3">UI/UX Design</label>
+                                        </div>
+                                        <div class="checkbox-option">
+                                            <input type="checkbox" id="service4" name="services" value="Website Maintenance">
+                                            <label for="service4">Website Maintenance</label>
+                                        </div>
+                                        <div class="checkbox-option">
+                                            <input type="checkbox" id="service5" name="services" value="Other">
+                                            <label for="service5">Other</label>
+                                        </div>
+                                    </div>
+                                    <div class="error-message" id="servicesError">Please select at least one option</div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="satisfaction" class="form-label required-field">How satisfied are you with my portfolio?</label>
+                                    <select class="form-control" id="satisfaction" name="satisfaction" required>
+                                        <option value="">Select your satisfaction level</option>
+                                        <option value="5">Very Satisfied</option>
+                                        <option value="4">Satisfied</option>
+                                        <option value="3">Neutral</option>
+                                        <option value="2">Dissatisfied</option>
+                                        <option value="1">Very Dissatisfied</option>
+                                    </select>
+                                    <div class="error-message" id="satisfactionError">Please select your satisfaction level</div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="feedback" class="form-label">Additional Feedback</label>
+                                    <textarea class="form-control" id="feedback" name="feedback" placeholder="What can I improve? What did you like?"></textarea>
+                                    <small class="text-muted">Maximum 500 characters &lt;500&gt;</small>
+                                </div>
+                            </fieldset>
+                            
+                            <!-- Terms and Submit -->
+                            <div class="form-group">
+                                <div class="checkbox-option">
+                                    <input type="checkbox" id="agreeTerms" name="agreeTerms" required>
+                                    <label for="agreeTerms" class="required-field">I agree to the terms and conditions</label>
+                                </div>
+                                <div class="error-message" id="termsError">You must agree to the terms</div>
+                            </div>
+                            
+                            <button type="submit" class="submit-btn">
+                                <i class="fas fa-paper-plane me-2"></i> Submit Survey
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-light py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h3 class="mb-3">Abdulbasit Abdulalim</h3>
+                    <p>Creating digital experiences that matter.</p>
+                    <div class="social-links mt-3">
+                        <a href="#" class="text-light me-3"><i class="fab fa-github"></i></a>
+                        <a href="#" class="text-light me-3"><i class="fab fa-linkedin"></i></a>
+                        <a href="#" class="text-light me-3"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <h5 class="mb-3">Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="index.html" class="text-light">Home</a></li>
+                        <li class="mb-2"><a href="about.html" class="text-light">About</a></li>
+                        <li class="mb-2"><a href="projects.html" class="text-light">Projects</a></li>
+                        <li class="mb-2"><a href="contact.html" class="text-light">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3">
+                    <h5 class="mb-3">Contact</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="mailto:hello@example.com" class="text-light">hello@example.com</a></li>
+                        <li class="mb-2"><a href="tel:+2341234567890" class="text-light">+234 123 456 7890</a></li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="my-4">
+            <div class="text-center">
+                <p>&copy; 2025 Abdulbasit Abdulalim. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JS -->
+    <script>
+        // Form Validation
+        document.getElementById('surveyForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Reset form state
+            const formGroups = document.querySelectorAll('.form-group');
+            formGroups.forEach(group => group.classList.remove('invalid'));
+            
+            let isValid = true;
+            
+            // Validate Full Name
+            const fullName = document.getElementById('fullName');
+            if (!fullName.value.trim()) {
+                document.getElementById('nameError').textContent = 'Please enter your full name';
+                fullName.closest('.form-group').classList.add('invalid');
+                isValid = false;
+            }
+            
+            // Validate Email
+            const email = document.getElementById('email');
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!email.value.trim()) {
+                document.getElementById('emailError').textContent = 'Please enter your email';
+                email.closest('.form-group').classList.add('invalid');
+                isValid = false;
+            } else if (!emailRegex.test(email.value)) {
+                document.getElementById('emailError').textContent = 'Please enter a valid email address';
+                email.closest('.form-group').classList.add('invalid');
+                isValid = false;
+            }
+            
+            // Validate Radio Buttons (How did you hear about us)
+            const hearAboutSelected = document.querySelector('input[name="hearAbout"]:checked');
+            if (!hearAboutSelected) {
+                document.getElementById('hearAboutError').textContent = 'Please select an option';
+                document.getElementById('hearAboutGroup').closest('.form-group').classList.add('invalid');
+                isValid = false;
+            }
+            
+            // Validate Checkboxes (Services interested in)
+            const servicesSelected = document.querySelectorAll('input[name="services"]:checked');
+            if (servicesSelected.length === 0) {
+                document.getElementById('servicesError').textContent = 'Please select at least one option';
+                document.getElementById('servicesGroup').closest('.form-group').classList.add('invalid');
+                isValid = false;
+            }
+            
+            // Validate Satisfaction
+            const satisfaction = document.getElementById('satisfaction');
+            if (!satisfaction.value) {
+                document.getElementById('satisfactionError').textContent = 'Please select your satisfaction level';
+                satisfaction.closest('.form-group').classList.add('invalid');
+                isValid = false;
+            }
+            
+            // Validate Terms Checkbox
+            const agreeTerms = document.getElementById('agreeTerms');
+            if (!agreeTerms.checked) {
+                document.getElementById('termsError').textContent = 'You must agree to the terms';
+                agreeTerms.closest('.form-group').classList.add('invalid');
+                isValid = false;
+            }
+            
+            // If form is valid, submit it
+            if (isValid) {
+                // Here you would typically send the form data to a server
+                alert('Thank you for your feedback! Your survey has been submitted.');
+                this.reset();
+            }
+        });
+        
+        // Real-time validation
+        document.getElementById('fullName').addEventListener('input', function() {
+            if (this.value.trim()) {
+                this.closest('.form-group').classList.remove('invalid');
+            }
+        });
+        
+        document.getElementById('email').addEventListener('input', function() {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (this.value.trim() && emailRegex.test(this.value)) {
+                this.closest('.form-group').classList.remove('invalid');
+            }
+        });
+        
+        document.querySelectorAll('input[name="hearAbout"]').forEach(radio => {
+            radio.addEventListener('change', function() {
+                if (document.querySelector('input[name="hearAbout"]:checked')) {
+                    document.getElementById('hearAboutGroup').closest('.form-group').classList.remove('invalid');
+                }
+            });
+        });
+        
+        document.querySelectorAll('input[name="services"]').forEach(checkbox => {
+            checkbox.addEventListener('change', function() {
+                if (document.querySelectorAll('input[name="services"]:checked').length > 0) {
+                    document.getElementById('servicesGroup').closest('.form-group').classList.remove('invalid');
+                }
+            });
+        });
+        
+        document.getElementById('satisfaction').addEventListener('change', function() {
+            if (this.value) {
+                this.closest('.form-group').classList.remove('invalid');
+            }
+        });
+        
+        document.getElementById('agreeTerms').addEventListener('change', function() {
+            if (this.checked) {
+                this.closest('.form-group').classList.remove('invalid');
+            }
+        });
+
+        // Dark Mode Toggle
+        document.getElementById('theme-toggle').addEventListener('click', function() {
+            document.body.classList.toggle('dark-mode');
+            
+            // Change icon
+            const icon = this.querySelector('i');
+            if (document.body.classList.contains('dark-mode')) {
+                icon.classList.remove('fa-moon');
+                icon.classList.add('fa-sun');
+                localStorage.setItem('theme', 'dark');
+            } else {
+                icon.classList.remove('fa-sun');
+                icon.classList.add('fa-moon');
+                localStorage.setItem('theme', 'light');
+            }
+        });
+
+        // Check for saved theme preference
+        if (localStorage.getItem('theme') === 'dark') {
+            document.body.classList.add('dark-mode');
+            const icon = document.querySelector('#theme-toggle i');
+            icon.classList.remove('fa-moon');
+            icon.classList.add('fa-sun');
+        }
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.style.padding = '0.5rem 2rem';
+                navbar.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.1)';
+            } else {
+                navbar.style.padding = '1rem 2rem';
+                navbar.style.boxShadow = '0 2px 30px rgba(0, 0, 0, 0.1)';
+            }
+        });
+    </script>
+</body>
+</html>

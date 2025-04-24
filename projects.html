@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projects | Abdulbasit Abdulalim</title>
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;900&family=Playfair+Display:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="icon" href="images/about.ico">
+    <style>
+        :root {
+            --primary: #840808;
+            --secondary: #55A37C;
+            --accent1: #506858;
+            --accent2: #CDCDBF;
+            --accent3: #68A04D;
+            --dark: #1a1a1a;
+            --light: #f8f9fa;
+        }
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--light);
+            color: var(--dark);
+            overflow-x: hidden;
+            position: relative;
+        }
+        
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 20% 30%, rgba(104, 160, 77, 0.1) 0%, transparent 30%), 
+                        radial-gradient(circle at 80% 70%, rgba(132, 8, 8, 0.1) 0%, transparent 30%);
+            z-index: -1;
+            pointer-events: none;
+        }
+        
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+        }
+        
+        /* Projects Page Specific Styles */
+        .projects-hero {
+            min-height: 50vh;
+            display: flex;
+            align-items: center;
+            background: linear-gradient(135deg, rgba(248, 249, 250, 0.9) 0%, rgba(205, 205, 191, 0.7) 100%);
+        }
+        
+        .project-filters {
+            margin-bottom: 3rem;
+        }
+        
+        .filter-btn {
+            padding: 0.5rem 1.5rem;
+            margin: 0 0.5rem 1rem;
+            border: 2px solid var(--primary);
+            background: transparent;
+            color: var(--primary);
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .filter-btn:hover, .filter-btn.active {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .project-card {
+            background-color: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+        }
+        
+        .project-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        
+        .project-info {
+            padding: 1.5rem;
+        }
+        
+        .project-title {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .project-client {
+            color: var(--accent1);
+            font-weight: 600;
+            margin-bottom: 1rem;
+            display: block;
+        }
+        
+        .project-tools {
+            display: flex;
+            flex-wrap: wrap;
+            margin-bottom: 1.5rem;
+            gap: 0.5rem;
+        }
+        
+        .tool-badge {
+            padding: 0.3rem 0.8rem;
+            background-color: var(--accent2);
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .project-actions {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .project-btn {
+            flex: 1;
+            padding: 0.5rem;
+            text-align: center;
+            border-radius: 5px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .project-btn.demo {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .project-btn.code {
+            background: var(--accent2);
+            color: var(--dark);
+        }
+        
+        .project-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        /* Project Details Section */
+        .project-details {
+            display: none;
+            padding: 5rem 0;
+            background-color: rgba(255,255,255,0.9);
+        }
+        
+        .project-details.active {
+            display: block;
+        }
+        
+        .detail-image {
+            width: 100%;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+        
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+            color: var(--primary);
+            font-weight: 600;
+            text-decoration: none;
+        }
+        
+        .feature-list {
+            margin: 2rem 0;
+        }
+        
+        .feature-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .feature-icon {
+            color: var(--primary);
+            margin-top: 0.2rem;
+        }
+        
+        /* Dark Mode Styles */
+        .dark-mode {
+            background-color: var(--dark);
+            color: var(--light);
+        }
+        
+        .dark-mode .project-card,
+        .dark-mode .project-details {
+            background-color: rgba(26, 26, 26, 0.9);
+        }
+        
+        .dark-mode .tool-badge,
+        .dark-mode .project-btn.code {
+            background-color: #333;
+            color: var(--light);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">Abdulbasit</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="about.html">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="projects.html">Projects</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="contact.html">Contact</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="survey.html">Survey</a>
+                    </li>
+                    <li class="nav-item">
+                        <button id="theme-toggle" class="btn btn-sm btn-outline-secondary ms-2">
+                            <i class="fas fa-moon"></i>
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="projects-hero">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-8 mx-auto text-center">
+                    <h1 class="display-3 fw-bold mb-4">My Projects</h1>
+                    <p class="lead">Here's a selection of projects I've worked on — from business websites to creative front-end apps. Each project helped me grow as a developer and sharpen my skills in HTML, CSS, and JavaScript.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Grid -->
+    <section class="py-5">
+        <div class="container">
+            <div class="project-filters text-center">
+                <button class="filter-btn active" data-filter="all">All Projects</button>
+                <button class="filter-btn" data-filter="web">Web Design</button>
+                <button class="filter-btn" data-filter="app">Web Apps</button>
+                <button class="filter-btn" data-filter="ui">UI/UX</button>
+            </div>
+            
+            <div class="project-grid" id="projectsContainer">
+                <!-- Project 1 -->
+                <div class="project-card" data-category="web" data-project="1">
+                    <img src="https://sdmntpritalynorth.oaiusercontent.com/files/00000000-a268-6246-87f6-e2b0e7991e2a/raw?se=2025-04-23T01%3A31%3A00Z&sp=r&sv=2024-08-04&sr=b&scid=5bc44254-9e90-5dc7-af11-90dbe42d257d&skoid=54ae6e2b-352e-4235-bc96-afa2512cc978&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2025-04-22T22%3A25%3A24Z&ske=2025-04-23T22%3A25%3A24Z&sks=b&skv=2024-08-04&sig=UsbNfRjXwrPr2sKh5TJojpK0UwUg/xzS1fD1AFd754U%3D" alt="EcoShop Project" class="project-image">
+                    <div class="project-info">
+                        <h3 class="project-title">EcoShop</h3>
+                        <span class="project-client">GreenCart Inc.</span>
+                        <p>A clean, eco-friendly online store selling sustainable products.</p>
+                        <div class="project-tools">
+                            <span class="tool-badge">HTML</span>
+                            <span class="tool-badge">CSS Grid</span>
+                            <span class="tool-badge">JavaScript</span>
+                        </div>
+                        <div class="project-actions">
+                            <a href="#" class="project-btn demo">Live Demo</a>
+                            <a href="#" class="project-btn code">View Code</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Project 2 -->
+                <div class="project-card" data-category="web" data-project="2">
+                    <img src="https://sdmntpritalynorth.oaiusercontent.com/files/00000000-a268-6246-87f6-e2b0e7991e2a/raw?se=2025-04-23T01%3A31%3A00Z&sp=r&sv=2024-08-04&sr=b&scid=5bc44254-9e90-5dc7-af11-90dbe42d257d&skoid=54ae6e2b-352e-4235-bc96-afa2512cc978&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2025-04-22T22%3A25%3A24Z&ske=2025-04-23T22%3A25%3A24Z&sks=b&skv=2024-08-04&sig=UsbNfRjXwrPr2sKh5TJojpK0UwUg/xzS1fD1AFd754U%3D" alt="Foodie Blog Project" class="project-image">
+                    <div class="project-info">
+                        <h3 class="project-title">Foodie Blog</h3>
+                        <span class="project-client">BiteLife</span>
+                        <p>A blog layout with interactive recipe cards and embedded videos.</p>
+                        <div class="project-tools">
+                            <span class="tool-badge">HTML</span>
+                            <span class="tool-badge">CSS</span>
+                            <span class="tool-badge">JavaScript</span>
+                        </div>
+                        <div class="project-actions">
+                            <a href="#" class="project-btn demo">Live Demo</a>
+                            <a href="#" class="project-btn code">View Code</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Project 3 -->
+                <div class="project-card" data-category="ui" data-project="3">
+                    <img src="https://sdmntpritalynorth.oaiusercontent.com/files/00000000-a268-6246-87f6-e2b0e7991e2a/raw?se=2025-04-23T01%3A31%3A00Z&sp=r&sv=2024-08-04&sr=b&scid=5bc44254-9e90-5dc7-af11-90dbe42d257d&skoid=54ae6e2b-352e-4235-bc96-afa2512cc978&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2025-04-22T22%3A25%3A24Z&ske=2025-04-23T22%3A25%3A24Z&sks=b&skv=2024-08-04&sig=UsbNfRjXwrPr2sKh5TJojpK0UwUg/xzS1fD1AFd754U%3D" alt="SmartHome Dashboard Project" class="project-image">
+                    <div class="project-info">
+                        <h3 class="project-title">SmartHome Dashboard</h3>
+                        <span class="project-client">NovaTech</span>
+                        <p>UI concept for controlling smart home devices.</p>
+                        <div class="project-tools">
+                            <span class="tool-badge">HTML</span>
+                            <span class="tool-badge">CSS</span>
+                            <span class="tool-badge">Vanilla JS</span>
+                        </div>
+                        <div class="project-actions">
+                            <a href="#" class="project-btn demo">Live Demo</a>
+                            <a href="#" class="project-btn code">View Code</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Project 4 -->
+                <div class="project-card" data-category="app" data-project="4">
+                    <img src="https://sdmntpritalynorth.oaiusercontent.com/files/00000000-a268-6246-87f6-e2b0e7991e2a/raw?se=2025-04-23T01%3A31%3A00Z&sp=r&sv=2024-08-04&sr=b&scid=5bc44254-9e90-5dc7-af11-90dbe42d257d&skoid=54ae6e2b-352e-4235-bc96-afa2512cc978&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2025-04-22T22%3A25%3A24Z&ske=2025-04-23T22%3A25%3A24Z&sks=b&skv=2024-08-04&sig=UsbNfRjXwrPr2sKh5TJojpK0UwUg/xzS1fD1AFd754U%3D" alt="Fitness Tracker Project" class="project-image">
+                    <div class="project-info">
+                        <h3 class="project-title">Fitness Tracker</h3>
+                        <span class="project-client">FitBuddy</span>
+                        <p>Interactive form and dashboard for tracking workouts.</p>
+                        <div class="project-tools">
+                            <span class="tool-badge">HTML</span>
+                            <span class="tool-badge">JavaScript</span>
+                            <span class="tool-badge">DOM</span>
+                        </div>
+                        <div class="project-actions">
+                            <a href="#" class="project-btn demo">Live Demo</a>
+                            <a href="#" class="project-btn code">View Code</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Project 5 -->
+                <div class="project-card" data-category="web" data-project="5">
+                    <img src="https://sdmntpritalynorth.oaiusercontent.com/files/00000000-a268-6246-87f6-e2b0e7991e2a/raw?se=2025-04-23T01%3A31%3A00Z&sp=r&sv=2024-08-04&sr=b&scid=5bc44254-9e90-5dc7-af11-90dbe42d257d&skoid=54ae6e2b-352e-4235-bc96-afa2512cc978&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2025-04-22T22%3A25%3A24Z&ske=2025-04-23T22%3A25%3A24Z&sks=b&skv=2024-08-04&sig=UsbNfRjXwrPr2sKh5TJojpK0UwUg/xzS1fD1AFd754U%3D" alt="Travel Booking Project" class="project-image">
+                    <div class="project-info">
+                        <h3 class="project-title">Travel Booking Page</h3>
+                        <span class="project-client">JetAway</span>
+                        <p>Landing page for a mock travel booking platform.</p>
+                        <div class="project-tools">
+                            <span class="tool-badge">HTML</span>
+                            <span class="tool-badge">CSS Animations</span>
+                        </div>
+                        <div class="project-actions">
+                            <a href="#" class="project-btn demo">Live Demo</a>
+                            <a href="#" class="project-btn code">View Code</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Project 6 -->
+                <div class="project-card" data-category="app" data-project="6">
+                    <img src="https://sdmntpritalynorth.oaiusercontent.com/files/00000000-a268-6246-87f6-e2b0e7991e2a/raw?se=2025-04-23T01%3A31%3A00Z&sp=r&sv=2024-08-04&sr=b&scid=5bc44254-9e90-5dc7-af11-90dbe42d257d&skoid=54ae6e2b-352e-4235-bc96-afa2512cc978&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2025-04-22T22%3A25%3A24Z&ske=2025-04-23T22%3A25%3A24Z&sks=b&skv=2024-08-04&sig=UsbNfRjXwrPr2sKh5TJojpK0UwUg/xzS1fD1AFd754U%3D" alt="Weather App Project" class="project-image">
+                    <div class="project-info">
+                        <h3 class="project-title">Weather App</h3>
+                        <span class="project-client">ClimateCast</span>
+                        <p>Fetches real-time weather using OpenWeather API.</p>
+                        <div class="project-tools">
+                            <span class="tool-badge">HTML</span>
+                            <span class="tool-badge">CSS</span>
+                            <span class="tool-badge">JavaScript</span>
+                            <span class="tool-badge">API</span>
+                        </div>
+                        <div class="project-actions">
+                            <a href="#" class="project-btn demo">Live Demo</a>
+                            <a href="#" class="project-btn code">View Code</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Project Details Section -->
+    <section class="project-details" id="projectDetails">
+        <div class="container">
+            <a href="#" class="back-btn" id="backToProjects">
+                <i class="fas fa-arrow-left"></i> Back to Projects
+            </a>
+            
+            <div class="row">
+                <div class="col-lg-6">
+                    <img src="" alt="Project Detail" class="detail-image" id="detailImage">
+                </div>
+                <div class="col-lg-6">
+                    <h2 id="detailTitle">Project Title</h2>
+                    <span class="project-client" id="detailClient">Client Name</span>
+                    
+                    <p class="mt-3" id="detailDescription">Project description goes here...</p>
+                    
+                    <div class="project-tools mb-4" id="detailTools"></div>
+                    
+                    <h4>Key Features</h4>
+                    <ul class="feature-list" id="detailFeatures"></ul>
+                    
+                    <div class="project-actions mt-4">
+                        <a href="#" class="project-btn demo" id="detailDemo">Live Demo</a>
+                        <a href="#" class="project-btn code" id="detailCode">View Code</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row mt-5">
+                <div class="col-12">
+                    <h4>Project Story</h4>
+                    <p id="detailStory">The project story and development process will appear here...</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-5 bg-light">
+        <div class="container text-center">
+            <h2 class="mb-4">Want to learn more about how I built these?</h2>
+            <p class="lead mb-5">Feel free to reach out — I'd be happy to walk you through the code or build something just for you.</p>
+            <a href="contact.html" class="btn btn-primary btn-lg px-4">Contact Me</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-light py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h3 class="mb-3">Abdulbasit Abdulalim</h3>
+                    <p>Creating digital experiences that matter.</p>
+                    <div class="social-links mt-3">
+                        <a href="#" class="text-light me-3"><i class="fab fa-github"></i></a>
+                        <a href="#" class="text-light me-3"><i class="fab fa-linkedin"></i></a>
+                        <a href="#" class="text-light me-3"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <h5 class="mb-3">Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="index.html" class="text-light">Home</a></li>
+                        <li class="mb-2"><a href="about.html" class="text-light">About</a></li>
+                        <li class="mb-2"><a href="projects.html" class="text-light">Projects</a></li>
+                        <li class="mb-2"><a href="contact.html" class="text-light">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3">
+                    <h5 class="mb-3">Contact</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="mailto:hello@example.com" class="text-light">hello@example.com</a></li>
+                        <li class="mb-2"><a href="tel:+1234567890" class="text-light">+123 456 7890</a></li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="my-4">
+            <div class="text-center">
+                <p>&copy; 2025 Abdulbasit Abdulalim. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JS -->
+    <script>
+        // Project Data
+        const projects = {
+            1: {
+                title: "EcoShop",
+                client: "GreenCart Inc.",
+                description: "A clean, eco-friendly online store selling sustainable products with intuitive navigation and product filtering.",
+                image: "assets/projects/eco-shop.jpg",
+                tools: ["HTML5", "CSS Grid", "JavaScript", "Responsive Design"],
+                features: [
+                    "Product filtering by category and price range",
+                    "Responsive design that works on all devices",
+                    "Interactive shopping cart with quantity controls",
+                    "Clean, accessible semantic markup"
+                ],
+                story: "This project challenged me to create an e-commerce interface that felt warm and inviting while maintaining a clean, modern aesthetic. I implemented a custom filtering system using vanilla JavaScript and focused heavily on responsive design principles to ensure accessibility across all devices.",
+                demo: "#",
+                code: "#"
+            },
+            2: {
+                title: "Foodie Blog",
+                client: "BiteLife",
+                description: "A food blog with interactive recipe cards, embedded cooking videos, and a meal planning feature.",
+                image: "assets/projects/foodie-blog.jpg",
+                tools: ["HTML5", "CSS3", "JavaScript", "YouTube API"],
+                features: [
+                    "Interactive recipe cards with expandable details",
+                    "Embedded cooking videos from YouTube",
+                    "Meal planning calendar with save functionality",
+                    "Print-friendly recipe pages"
+                ],
+                story: "The BiteLife blog required a balance between visual appeal and functionality. I created custom recipe cards that expand to show full details and implemented a meal planning feature using localStorage to save user preferences. The YouTube API integration allows for seamless video embedding.",
+                demo: "#",
+                code: "#"
+            },
+            3: {
+                title: "SmartHome Dashboard",
+                client: "NovaTech",
+                description: "A UI concept for controlling smart home devices with real-time status updates and scheduling.",
+                image: "assets/projects/smarthome.jpg",
+                tools: ["UI Design", "HTML5", "CSS3", "JavaScript"],
+                features: [
+                    "Device status monitoring in real-time",
+                    "Custom scheduling interface",
+                    "Energy usage visualization",
+                    "Dark/light mode toggle"
+                ],
+                story: "Designing this dashboard required careful consideration of user experience for controlling multiple smart devices. I focused on creating clear visual hierarchies and intuitive controls. The energy usage charts were particularly challenging to implement with vanilla JavaScript.",
+                demo: "#",
+                code: "#"
+            },
+            4: {
+                title: "Fitness Tracker",
+                client: "FitBuddy",
+                description: "An interactive dashboard for tracking workouts, nutrition, and fitness progress over time.",
+                image: "assets/projects/fitness-tracker.jpg",
+                tools: ["HTML5", "CSS3", "JavaScript", "Chart.js"],
+                features: [
+                    "Workout logging with exercise database",
+                    "Nutrition tracking with calorie counter",
+                    "Progress charts and statistics",
+                    "Responsive design for mobile use"
+                ],
+                story: "This project helped me master form handling and data visualization in JavaScript. I implemented a comprehensive exercise database and used Chart.js to create visual representations of user progress. The mobile-first approach was crucial for this fitness application.",
+                demo: "#",
+                code: "#"
+            },
+            5: {
+                title: "Travel Booking Page",
+                client: "JetAway",
+                description: "A landing page for a travel booking platform with destination filtering and booking form.",
+                image: "assets/projects/travel-booking.jpg",
+                tools: ["HTML5", "CSS Animations", "JavaScript", "Form Validation"],
+                features: [
+                    "Animated destination cards",
+                    "Interactive booking form with validation",
+                    "Responsive hero section with video background",
+                    "Accessible tab navigation"
+                ],
+                story: "Creating an inviting travel booking page required attention to visual details and smooth animations. I implemented a custom form validation system and worked extensively with CSS animations to create engaging hover effects without compromising performance.",
+                demo: "#",
+                code: "#"
+            },
+            6: {
+                title: "Weather App",
+                client: "ClimateCast",
+                description: "A weather application that fetches real-time data using the OpenWeather API with 5-day forecasts.",
+                image: "assets/projects/weather-app.jpg",
+                tools: ["HTML5", "CSS3", "JavaScript", "API Integration"],
+                features: [
+                    "Real-time weather data fetching",
+                    "5-day forecast display",
+                    "Location detection",
+                    "Unit conversion (Celsius/Fahrenheit)"
+                ],
+                story: "This was my first project working with external APIs. I learned how to make fetch requests, handle responses, and display dynamic data. The app includes location detection and allows users to search for weather in any city worldwide.",
+                demo: "#",
+                code: "#"
+            }
+        };
+
+        // DOM Elements
+        const projectsContainer = document.getElementById('projectsContainer');
+        const projectDetails = document.getElementById('projectDetails');
+        const backToProjects = document.getElementById('backToProjects');
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        
+        // Detail Elements
+        const detailTitle = document.getElementById('detailTitle');
+        const detailClient = document.getElementById('detailClient');
+        const detailDescription = document.getElementById('detailDescription');
+        const detailImage = document.getElementById('detailImage');
+        const detailTools = document.getElementById('detailTools');
+        const detailFeatures = document.getElementById('detailFeatures');
+        const detailStory = document.getElementById('detailStory');
+        const detailDemo = document.getElementById('detailDemo');
+        const detailCode = document.getElementById('detailCode');
+
+        // Project Click Handler
+        projectsContainer.addEventListener('click', function(e) {
+            const projectCard = e.target.closest('.project-card');
+            if (projectCard) {
+                const projectId = projectCard.dataset.project;
+                loadProjectDetails(projectId);
+            }
+        });
+
+        // Back Button Handler
+        backToProjects.addEventListener('click', function(e) {
+            e.preventDefault();
+            projectDetails.classList.remove('active');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // Filter Button Handler
+        filterButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                // Update active button
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                this.classList.add('active');
+                
+                const filter = this.dataset.filter;
+                filterProjects(filter);
+            });
+        });
+
+        // Load Project Details
+        function loadProjectDetails(projectId) {
+            const project = projects[projectId];
+            
+            // Update DOM elements
+            detailTitle.textContent = project.title;
+            detailClient.textContent = project.client;
+            detailDescription.textContent = project.description;
+            detailImage.src = project.image;
+            detailImage.alt = `${project.title} Project`;
+            detailStory.textContent = project.story;
+            detailDemo.href = project.demo;
+            detailCode.href = project.code;
+            
+            // Update tools
+            detailTools.innerHTML = '';
+            project.tools.forEach(tool => {
+                const toolSpan = document.createElement('span');
+                toolSpan.className = 'tool-badge';
+                toolSpan.textContent = tool;
+                detailTools.appendChild(toolSpan);
+            });
+            
+            // Update features
+            detailFeatures.innerHTML = '';
+            project.features.forEach(feature => {
+                const li = document.createElement('li');
+                li.className = 'feature-item';
+                li.innerHTML = `
+                    <span class="feature-icon"><i class="fas fa-check-circle"></i></span>
+                    <span>${feature}</span>
+                `;
+                detailFeatures.appendChild(li);
+            });
+            
+            // Show details section
+            projectDetails.classList.add('active');
+            window.scrollTo({ top: projectDetails.offsetTop, behavior: 'smooth' });
+        }
+
+        // Filter Projects
+        function filterProjects(filter) {
+            const allProjects = document.querySelectorAll('.project-card');
+            
+            allProjects.forEach(project => {
+                if (filter === 'all' || project.dataset.category === filter) {
+                    project.style.display = 'block';
+                } else {
+                    project.style.display = 'none';
+                }
+            });
+        }
+
+        // Dark Mode Toggle
+        document.getElementById('theme-toggle').addEventListener('click', function() {
+            document.body.classList.toggle('dark-mode');
+            
+            // Change icon
+            const icon = this.querySelector('i');
+            if (document.body.classList.contains('dark-mode')) {
+                icon.classList.remove('fa-moon');
+                icon.classList.add('fa-sun');
+                localStorage.setItem('theme', 'dark');
+            } else {
+                icon.classList.remove('fa-sun');
+                icon.classList.add('fa-moon');
+                localStorage.setItem('theme', 'light');
+            }
+        });
+
+        // Check for saved theme preference
+        if (localStorage.getItem('theme') === 'dark') {
+            document.body.classList.add('dark-mode');
+            const icon = document.querySelector('#theme-toggle i');
+            icon.classList.remove('fa-moon');
+            icon.classList.add('fa-sun');
+        }
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.style.padding = '0.5rem 2rem';
+                navbar.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.1)';
+            } else {
+                navbar.style.padding = '1rem 2rem';
+                navbar.style.boxShadow = '0 2px 30px rgba(0, 0, 0, 0.1)';
+            }
+        });
+    </script>
+</body>
+</html>

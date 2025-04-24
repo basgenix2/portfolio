@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Me | Abdulbasit Abdulalim</title>
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;900&family=Playfair+Display:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="icon" href="images/about.ico">
+    <style>
+        :root {
+            --primary: #840808;
+            --secondary: #55A37C;
+            --accent1: #506858;
+            --accent2: #CDCDBF;
+            --accent3: #68A04D;
+            --dark: #1a1a1a;
+            --light: #f8f9fa;
+        }
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--light);
+            color: var(--dark);
+            overflow-x: hidden;
+            position: relative;
+        }
+        
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 20% 30%, rgba(104, 160, 77, 0.1) 0%, transparent 30%), 
+                        radial-gradient(circle at 80% 70%, rgba(132, 8, 8, 0.1) 0%, transparent 30%);
+            z-index: -1;
+            pointer-events: none;
+        }
+        
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+        }
+        
+        /* About Page Specific Styles */
+        .about-hero {
+            min-height: 60vh;
+            display: flex;
+            align-items: center;
+            background: linear-gradient(135deg, rgba(248, 249, 250, 0.9) 0%, rgba(205, 205, 191, 0.7) 100%);
+        }
+        
+        .philosophy-section {
+            background-color: rgba(255,255,255,0.8);
+            padding: 5rem 0;
+            position: relative;
+        }
+        
+        .philosophy-section::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%2355A37C' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            z-index: -1;
+            opacity: 0.3;
+        }
+        
+        .skills-section {
+            padding: 5rem 0;
+        }
+        
+        .skill-category {
+            margin-bottom: 3rem;
+        }
+        
+        .skill-category h3 {
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .skill-category h3::after {
+            content: "";
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 50%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+        }
+        
+        .hobbies-section {
+            background-color: var(--accent2);
+            padding: 5rem 0;
+        }
+        
+        .hobby-item {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            height: 100%;
+        }
+        
+        .hobby-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+        }
+        
+        .hobby-icon {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+        }
+        
+        .timeline-section {
+            padding: 5rem 0;
+            position: relative;
+        }
+        
+        .timeline-item {
+            position: relative;
+            padding-left: 3rem;
+            margin-bottom: 3rem;
+        }
+        
+        .timeline-item::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 2px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--primary), var(--secondary));
+        }
+        
+        .timeline-dot {
+            position: absolute;
+            left: -10px;
+            top: 0;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+        }
+        
+        .timeline-date {
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+        
+        .cta-section {
+            padding: 5rem 0;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+        }
+        
+        /* Dark Mode Styles */
+        .dark-mode {
+            background-color: var(--dark);
+            color: var(--light);
+        }
+        
+        .dark-mode .philosophy-section,
+        .dark-mode .skills-section,
+        .dark-mode .hobby-item {
+            background-color: rgba(26, 26, 26, 0.9);
+            color: var(--light);
+        }
+        
+        .dark-mode .hobbies-section {
+            background-color: #333;
+        }
+        
+        .dark-mode .hobby-item {
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">Abdulbasit</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="about.html">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="projects.html">Projects</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="contact.html">Contact</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="survey.html">Survey</a>
+                    </li>
+                    <li class="nav-item">
+                        <button id="theme-toggle" class="btn btn-sm btn-outline-secondary ms-2">
+                            <i class="fas fa-moon"></i>
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="about-hero">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <h1 class="display-3 fw-bold mb-4">About Me</h1>
+                    <p class="lead">Get to know the person behind the code</p>
+                </div>
+                <div class="col-lg-6">
+                    <img src="assets/about-hero.svg" alt="About illustration" class="img-fluid">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Introduction Section -->
+    <section class="philosophy-section">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-8 text-center mb-5">
+                    <h2 class="mb-4">Who I Am</h2>
+                    <p class="lead">I'm Abdulbasit Abdulalim, a creative and self-motivated web developer with a strong passion for building beautiful and functional websites.</p>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <p>As a Computer Science student at Lagos State University, I discovered my love for web development through building personal projects. What started as a hobby quickly turned into a passion as I realized the power of code to create impactful digital experiences.</p>
+                    <p>My goal is to craft websites that not only look great but also solve real problems. I believe in continuous learning and pushing myself to master new technologies that can help me build better products.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Philosophy Section -->
+    <section class="skills-section">
+        <div class="container">
+            <div class="row justify-content-center mb-5">
+                <div class="col-lg-8 text-center">
+                    <h2>My Development Philosophy</h2>
+                    <p class="lead">How I approach building digital experiences</p>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="card border-0 shadow-sm mb-4">
+                        <div class="card-body p-4">
+                            <h3 class="h4">Simplicity & Clarity</h3>
+                            <p>I believe in the power of simple, clean design. The best interfaces are those that users can navigate intuitively without unnecessary complexity.</p>
+                        </div>
+                    </div>
+                    <div class="card border-0 shadow-sm mb-4">
+                        <div class="card-body p-4">
+                            <h3 class="h4">Performance Matters</h3>
+                            <p>I optimize every website to be fast and responsive because loading speed directly impacts user experience and conversion rates.</p>
+                        </div>
+                    </div>
+                    <div class="card border-0 shadow-sm">
+                        <div class="card-body p-4">
+                            <h3 class="h4">Accessibility for All</h3>
+                            <p>I build websites that everyone can use, regardless of ability or device. Web accessibility isn't optional - it's essential.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section class="philosophy-section">
+        <div class="container">
+            <div class="row justify-content-center mb-5">
+                <div class="col-lg-8 text-center">
+                    <h2>My Skills & Technologies</h2>
+                    <p class="lead">The tools and technologies I work with</p>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-md-4 skill-category">
+                    <h3>Frontend</h3>
+                    <ul class="list-unstyled">
+                        <li class="mb-2">
+                            <strong>HTML5</strong>
+                            <ul>
+                                <li>Semantic markup</li>
+                                <li>Accessibility standards</li>
+                            </ul>
+                        </li>
+                        <li class="mb-2">
+                            <strong>CSS3</strong>
+                            <ul>
+                                <li>Flexbox & Grid</li>
+                                <li>Animations & Transitions</li>
+                                <li>Responsive design</li>
+                            </ul>
+                        </li>
+                        <li class="mb-2">
+                            <strong>JavaScript</strong>
+                            <ul>
+                                <li>ES6+ features</li>
+                                <li>DOM manipulation</li>
+                                <li>Async programming</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="col-md-4 skill-category">
+                    <h3>Tools</h3>
+                    <ul class="list-unstyled">
+                        <li class="mb-2">
+                            <strong>Version Control</strong>
+                            <ul>
+                                <li>Git</li>
+                                <li>GitHub</li>
+                            </ul>
+                        </li>
+                        <li class="mb-2">
+                            <strong>Development</strong>
+                            <ul>
+                                <li>VS Code</li>
+                                <li>Chrome DevTools</li>
+                            </ul>
+                        </li>
+                        <li class="mb-2">
+                            <strong>Design</strong>
+                            <ul>
+                                <li>Figma</li>
+                                <li>Adobe XD</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="col-md-4 skill-category">
+                    <h3>Other</h3>
+                    <ul class="list-unstyled">
+                        <li class="mb-2">
+                            <strong>Web Principles</strong>
+                            <ul>
+                                <li>Accessibility (WCAG)</li>
+                                <li>SEO best practices</li>
+                            </ul>
+                        </li>
+                        <li class="mb-2">
+                            <strong>Process</strong>
+                            <ul>
+                                <li>Debugging</li>
+                                <li>Performance optimization</li>
+                                <li>Cross-browser testing</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Hobbies Section -->
+    <section class="hobbies-section">
+        <div class="container">
+            <div class="row justify-content-center mb-5">
+                <div class="col-lg-8 text-center">
+                    <h2>Beyond Coding</h2>
+                    <p class="lead">What I enjoy when I'm not developing websites</p>
+                </div>
+            </div>
+            
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="hobby-item">
+                        <div class="hobby-icon">
+                            <i class="fas fa-headphones"></i>
+                        </div>
+                        <h3>Tech Podcasts</h3>
+                        <p>I love staying updated by listening to podcasts about web development, design, and emerging technologies.</p>
+                    </div>
+                </div>
+                
+                <div class="col-md-4">
+                    <div class="hobby-item">
+                        <div class="hobby-icon">
+                            <i class="fas fa-book-open"></i>
+                        </div>
+                        <h3>Reading</h3>
+                        <p>I regularly read articles and books about frontend trends, UX design principles, and productivity.</p>
+                    </div>
+                </div>
+                
+                <div class="col-md-4">
+                    <div class="hobby-item">
+                        <div class="hobby-icon">
+                            <i class="fas fa-gamepad"></i>
+                        </div>
+                        <h3>Strategy Games</h3>
+                        <p>Playing strategy games helps me sharpen my problem-solving skills and think several steps ahead.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Timeline Section -->
+    <section class="timeline-section">
+        <div class="container">
+            <div class="row justify-content-center mb-5">
+                <div class="col-lg-8 text-center">
+                    <h2>My Development Journey</h2>
+                    <p class="lead">Key milestones in my learning path</p>
+                </div>
+            </div>
+            
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-date">2021</div>
+                        <h3>Started Learning Web Development</h3>
+                        <p>Began with HTML & CSS fundamentals through online courses and documentation.</p>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-date">Early 2022</div>
+                        <h3>First Complete Website</h3>
+                        <p>Built my first responsive portfolio website using basic HTML, CSS, and JavaScript.</p>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-date">Mid 2022</div>
+                        <h3>Discovered Modern CSS</h3>
+                        <p>Mastered Flexbox, Grid, and CSS animations to create more sophisticated layouts.</p>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-date">Late 2022</div>
+                        <h3>JavaScript Deep Dive</h3>
+                        <p>Focused on ES6+ features, DOM manipulation, and building interactive web apps.</p>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-date">2023</div>
+                        <h3>Published on GitHub</h3>
+                        <p>Started contributing to open-source projects and sharing my own code repositories.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container text-center">
+            <h2 class="text-white mb-4">Want to See What I Can Do?</h2>
+            <p class="lead text-white mb-5">Check out my projects or get in touch to discuss how we can work together.</p>
+            <div class="d-flex justify-content-center gap-3">
+                <a href="projects.html" class="btn btn-light btn-lg px-4">View Projects</a>
+                <a href="contact.html" class="btn btn-outline-light btn-lg px-4">Contact Me</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-light py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h3 class="mb-3">Abdulbasit Abdulalim</h3>
+                    <p>Creating digital experiences that matter.</p>
+                    <div class="social-links mt-3">
+                        <a href="#" class="text-light me-3"><i class="fab fa-github"></i></a>
+                        <a href="#" class="text-light me-3"><i class="fab fa-linkedin"></i></a>
+                        <a href="#" class="text-light me-3"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <h5 class="mb-3">Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="index.html" class="text-light">Home</a></li>
+                        <li class="mb-2"><a href="about.html" class="text-light">About</a></li>
+                        <li class="mb-2"><a href="projects.html" class="text-light">Projects</a></li>
+                        <li class="mb-2"><a href="contact.html" class="text-light">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3">
+                    <h5 class="mb-3">Contact</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="mailto:hello@example.com" class="text-light">hello@example.com</a></li>
+                        <li class="mb-2"><a href="tel:+1234567890" class="text-light">+123 456 7890</a></li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="my-4">
+            <div class="text-center">
+                <p>&copy; 2025 Abdulbasit Abdulalim. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JS -->
+    <script>
+        // Dark Mode Toggle
+        document.getElementById('theme-toggle').addEventListener('click', function() {
+            document.body.classList.toggle('dark-mode');
+            
+            // Change icon
+            const icon = this.querySelector('i');
+            if (document.body.classList.contains('dark-mode')) {
+                icon.classList.remove('fa-moon');
+                icon.classList.add('fa-sun');
+                localStorage.setItem('theme', 'dark');
+            } else {
+                icon.classList.remove('fa-sun');
+                icon.classList.add('fa-moon');
+                localStorage.setItem('theme', 'light');
+            }
+        });
+
+        // Check for saved theme preference
+        if (localStorage.getItem('theme') === 'dark') {
+            document.body.classList.add('dark-mode');
+            const icon = document.querySelector('#theme-toggle i');
+            icon.classList.remove('fa-moon');
+            icon.classList.add('fa-sun');
+        }
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.style.padding = '0.5rem 2rem';
+                navbar.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.1)';
+            } else {
+                navbar.style.padding = '1rem 2rem';
+                navbar.style.boxShadow = '0 2px 30px rgba(0, 0, 0, 0.1)';
+            }
+        });
+    </script>
+</body>
+</html>
